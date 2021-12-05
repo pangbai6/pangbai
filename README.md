@@ -1,36 +1,37 @@
-想睡觉了
+# 一级字体样式
 
-只是个收集脚本的而已
+[文字超链接](地址)
 
-开卡青蛙库 基本任务 念 fk
+#### 下级字体样式
+* 列表文字1
+* 列表文字2
+
+#### 下级字体样式
+* 列表文字1
+    *   下级列表文字1
+    *   下级列表文字2
+* 列表文字2
+    *   下级列表文字1
+    *   下级列表文字2
+
+* 列表文字3
+
+        for(int i=0;i<4;i++){
+            System.out.println("代码格式");
+        }
+
+#### 关于作者
+1.  排序1：@xcsharp
+    * QQ: NUMBER
+    * 邮箱：STRING
+    * Github:URL
+
+2. 排序2：@xcsharp
+    * 邮箱：STRING
+    * 官网：URL
 
 
-拉库地址
-ql repo https://github.com/pangbai6/pangbai66.git "jd_|jx_|gua_|jddj_|getJDCookie" "activity|backUp" "^jd[^_]|USER|function|utils|sendnotify|ZooFaker_Necklace|jd_Cookie|JDJRValidator_|sign_graphics_validate|ql|magic|cleancart_activity"
-
-
-
-
-
-
-
-
-特别声明：
-本仓库发布的脚本项目中涉及的任何解锁和解密分析脚本仅用于测试，学习和研究，禁止用于商业目的。其合法性、准确性、完整性和有效性无法得到保证。请根据情况做出自己的判断。.
-
-本项目中的所有资源文件均禁止由任何官方帐户或自媒体以任何形式复制或发布。
-
-本仓库对任何脚本问题概不负责，包括但不限于因任何脚本错误而造成的任何损失或损坏。
-
-任何间接使用脚本的用户，包括但不限于建立VPS或传播VPS的某些行为违反国家/地区法律或相关法规，本仓库不对由此造成的任何隐私泄露或其他后果负责。
-
-请勿将脚本项目的任何内容用于商业或非法目的，否则您将承担后果。
-
-如果任何单位或个人认为项目脚本可能涉嫌侵犯其权利，应及时通知并提供身份和所有权证明。我们将在收到认证文件后删除相关脚本。
-
-以任何方式或直接或间接使用脚本项目的任何脚本查看此项目的任何人都应仔细阅读本声明。本仓库保留随时更改或补充本免责声明的权利。一旦您使用并复制了脚本项目的任何相关脚本或规则，即视为您已接受此免责声明。
-
-您必须在下载后24小时内从计算机或手机中完全删除上述内容。
-
-您在本仓库使用或复制了您自己制作的任何脚本，即视为已接受本声明，请仔细阅读
+#### 图片展示
+![说明1](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcuYml0b29sLmNuL25ld3NpbWFnZS81OWIzODNkNmM4YjA1YTNhNDE4MjYxMjEzZTdiYWExNS5qcGc?x-oss-process=image/format,png)
+[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-s9KBdnXc-1591778589593)(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591786663171&di=3d1651c317a07ab709c5aefe5fe63476&imgtype=0&src=http%3A%2F%2Fy0.ifengimg.com%2F0b9fe65daf8f577d%2F2014%2F1105%2Fre_5459c53e81344.jpg "说明2")]
 
