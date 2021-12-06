@@ -19,7 +19,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let appIdArr = ['1EFVXxg'];
 let appNameArr = ['金榜年终奖'];
 let appId, appName;
-$.shareCode = [];
+$.shareCode = [T0205KkcF29zoyy0QFOP8pdNCjRQmoaX5kRrbA];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
