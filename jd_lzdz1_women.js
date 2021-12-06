@@ -38,7 +38,7 @@ if (process.env.NO_RUSH && process.env.NO_RUSH != "") {
     authorCodeList = await getAuthorCodeList('0ba06f7b869e43e3806d42cd5477dbc5')
     if($.getAuthorCodeListerr === false){
         authorCodeList = [
-            '',
+            'b006bf4c382a4bf6a4b7bd71a22459aa',
         ]
     }
 
