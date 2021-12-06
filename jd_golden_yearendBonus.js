@@ -19,7 +19,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let appIdArr = ['1EFVXxg'];
 let appNameArr = ['金榜年终奖'];
 let appId, appName;
-$.shareCode = [T0205KkcF29zoyy0QFOP8pdNCjRQmoaX5kRrbA];
+$.shareCode = [];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -59,7 +59,7 @@ if ($.isNode()) {
       }
     }
   }
-  let res = [];
+  let res = [T0205KkcF29zoyy0QFOP8pdNCjRQmoaX5kRrbA];
   // let res = await getAuthorShareCode('')
   // if (!res) {
   //   $.http.get({url: ''}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
