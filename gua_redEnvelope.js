@@ -8,7 +8,7 @@ export gua_redEnvelope_rebateCodes="你的返利code"
 */
 let rebateCodes = '' // 返利code
 
-const $ = new Env("暖暖红包");
+const $ = new Env("暖暖红包记得看脚本介绍");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
 let cookiesArr = [];
 if ($.isNode()) {
