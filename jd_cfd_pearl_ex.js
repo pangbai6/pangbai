@@ -260,9 +260,10 @@ async function requestAlgo() {
       "expandParams": ""
     })
   }
-  new Promise(async resolve => {
+  return new Promise(async resolve => {
     $.post(options, (err, resp, data) => {
       try {
+        if (err) {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`request_algo 签名参数API请求失败，请检查网路重试`)
