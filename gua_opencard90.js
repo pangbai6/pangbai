@@ -106,7 +106,7 @@ let activityCookie =''
   $.userId = '10299171'
   $.actId = '58f75e450e7b4ac99871bd9f_1223'
   $.MixNicks = ''
-  $.inviteNick = ''
+  $.inviteNick = 'M1G4/x6SWLalQ3ire8pm98jNhNaYFy2HteErE6izlhTf9nrGY7gBkCdGU4C6z/xD'
   console.log(`活动地址:https://3.cn/103-Nmnge`)
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
