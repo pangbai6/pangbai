@@ -56,7 +56,7 @@ if ($.isNode()) {
     authorCodeList = await getAuthorCodeList('https://gitee.com/K1/J/raw/master/shareCodes/o36.json')
     if(authorCodeList === '404: Not Found'){
         authorCodeList = [
-            '33e74826e59c474e9767e4533aecb485',
+            '64d92ab5656142f090084829f3c9c222',
         ]
     }
     // console.log(authorCodeList)
