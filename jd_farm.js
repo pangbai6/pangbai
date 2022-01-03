@@ -3,7 +3,7 @@
 City
  [task_local]
 #脚本配置
-5 6-18/6 * * * https://raw.githubusercontent.com/Yun-City/City/main/jd_farm, tag=农场日常任务, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+0 9,22 * * * * * * https://raw.githubusercontent.com/Yun-City/City/main/jd_farm, tag=农场日常任务, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 */
 const $ = new Env('东东农场日常任务');
 let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, newShareCodes, allMessage = '';
