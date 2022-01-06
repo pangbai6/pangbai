@@ -128,5 +128,5 @@ let envName = process.env.ShareCodeEnvName
 if (nameConfig && envName) {
     SetShareCodesEnv(nameConfig, envName)
 } else {
-    console.debug(`正在运行脚本`)
+    console.debug(`友情提示：正在运行脚本`)
 }
