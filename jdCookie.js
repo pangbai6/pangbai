@@ -123,9 +123,10 @@ function GetCurrentActivityScriptFileName() {
 }
 
 // 若在task_before.sh 中设置了要设置互助码环境变量的活动名称和环境变量名称信息，则在nodejs中处理，供活动使用
-let nameChinese = process.env.ShareCodeConfigChineseName
 let nameConfig = process.env.ShareCodeConfigName
 let envName = process.env.ShareCodeEnvName
-if (nameChinese && nameConfig && envName) {
-    SetShareCodesEnv(nameChinese, nameConfig, envName)
-} 
+if (nameConfig && envName) {
+    SetShareCodesEnv(nameConfig, envName)
+} else {
+    console.debug(`正在运行脚本`)
+}
