@@ -32,7 +32,7 @@ if ($.isNode()) {
     console.log(authorCodeList)
     if($.getAuthorCodeListerr === false){
         authorCodeList = [
-            '',
+            '74c2d34fdf3c453e8cb9ad8bda64db13',
         ]
     }
     // console.log(authorCodeList)
