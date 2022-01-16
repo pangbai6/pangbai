@@ -61,9 +61,9 @@ Object.keys(jdCookieNode).forEach((item) => {
         }
     }
     let authorCode = []
-    let res = await getAuthorShareCode('')
+    let res = await getAuthorShareCode('https://raw.githubusercontent.com/pangbai6/pangbai66/main/shareCodes/tiger.json')
     if (!res) {
-        res = await getAuthorShareCode('')
+        res = await getAuthorShareCode('https://raw.githubusercontent.com/pangbai6/pangbai66/main/shareCodes/tiger.json')
     }
     if (res) {
         authorCode = res.sort(() => 0.5 - Math.random())
