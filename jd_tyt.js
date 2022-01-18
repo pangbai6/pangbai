@@ -7,7 +7,7 @@
 0 1 * * * jd_tyt.js, tag=推一推, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 */
 
-const $ = new Env('极速版-推推赚大钱');//助力前三个可助力的账号
+const $ = new Env('极速版-推推赚大钱');//助力前八个可助力的账号不满意去57行改即可
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -53,7 +53,7 @@ if ($.isNode()) {
           await info()
           await coinDozerBackFlow()
           await getCoinDozerInfo()
-          console.log('\n注意助力前三个可助力的账号\n');
+          console.log('\n助力前八个可助力的账号不满意去57行改即可\n');
           if (inviteCodes.length >= 7) {
                break
           }
@@ -284,7 +284,7 @@ function getCoinDozerInfo() {
                          if (safeGet(data)) {
                               data = JSON.parse(data);
                               if (data.success == true && data?.data?.sponsorActivityInfo?.packetId) {
-                                   console.log('叼毛：' + data.data.sponsorActivityInfo.initiatorNickname)
+                                   console.log('CK：' + data.data.sponsorActivityInfo.initiatorNickname)
                                    console.log('邀请码：' + data.data.sponsorActivityInfo.packetId)
                                    console.log('推出：' + data.data.sponsorActivityInfo.dismantledAmount)
                                    if (data.data && data.data.sponsorActivityInfo.packetId) {
