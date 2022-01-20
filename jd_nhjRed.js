@@ -1,6 +1,6 @@
 /*
 年货节红包
-cron 0 0,10,20,22 * * *  https://raw.githubusercontent.com/pangbai6/pangbai66/master/nhjRed.js
+cron 0 0,10,20,22 * * *  https://raw.githubusercontent.com/pangbai6/pangbai66/master/jd_nhjRed.js
 整点跑 红包几率大点
 
 https://u.jd.com/SthwUCb
@@ -8,13 +8,13 @@ https://u.jd.com/SthwUCb
 
 返利变量：nhjRed_rebateCode，若需要返利给自己，请自己修改环境变量[gua_nhjRed_rebateCode]
 SChaCUq换成自己的返利 京粉app转链即可
-export nhjRed_rebateCode="SthwUCb"
+export jd_nhjRed_rebateCode="SthwUCb"
 
 需要助力[火力值]的账号pin值
 如：【京东账号2】pin
 pin1换成对应的pin值 用,分开
 只助力2个 满了脚本自动从ck1开始替换未满的
-export nhjRed_rebatePin="pin1,pin2"
+export jd_nhjRed_rebatePin="pin1,pin2"
 自己改返利码 下面那个是我的
 
 */
