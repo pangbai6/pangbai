@@ -1,7 +1,7 @@
 /*
 TG https://t.me/aaron_scriptsG
 被内鬼偷给柠檬了,大家一起玩吧
-33 0,6-23/2 * * * jd_travel.js
+9 18 * * * jd_travel.js
 */
 const $ = new Env('炸年兽');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -39,9 +39,6 @@ const pkTeamNum = () => Math.ceil(cookiesArr.length / 30)
     }
     console.log(`
 【温馨提示】
-默认膨胀时间：22时， 默认开启膨胀红包时间：23时
-如不需要自动膨胀请设置环境变量 JD_TRAVEL_EXPAND=-1
-如需自动膨胀请注意设置好corn时间差，如22:00，23:00运行则刚好错过膨胀红包，22:30,23:00运行则助力基本可以成功
 `)
     const helpSysInfoArr = []
     for (let i = 0; i < cookiesArr.length; i++) {
