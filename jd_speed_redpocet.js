@@ -22,12 +22,12 @@ cron "20 0,22 * * *" script-path=jd_speed_redpocke.js,tag=京东极速版红包
 ============小火箭=========
 京东极速版红包 = type=cron,script-path=jd_speed_redpocke.js, cronexpr="20 0,22 * * *", timeout=3600, enable=true
 */
-const $ = new Env('京东极速版红包');
+const $ = new Env('京东极速版红包提现');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '', message;
-const linkIdArr = ["7ya6o83WSbNhrbYJqsMfFA"];
+const linkIdArr = ["7ya6o83WSbNhrbYJqsMfFA","Eu7-E0CUzqYyhZJo9d3YkQ"];
 const signLinkId = '9WA12jYGulArzWS7vcrwhw';
 let linkId;
 if ($.isNode()) {
@@ -80,7 +80,7 @@ if ($.isNode()) {
 async function jsRedPacket() {
   try {
     await invite2();
-    await sign();//极速版签到提现
+    //await sign();//极速版签到提现
     await reward_query();
     for (let i = 0; i < 3; ++i) {
       await redPacket();//开红包
