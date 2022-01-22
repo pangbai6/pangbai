@@ -51,13 +51,13 @@ let activityCookie =''
     return;
   }
   // return
-  $.appkey = '51B59BB805903DA4CE513D29EC448375'
+  $.appkey = ''
   $.userId = '10299171'
-  $.actId = ''
+  $.actId = 'b2d6a99babf64595aac5_220123'
   $.MixNicks = ''
   $.inviteNick = ''
   console.log(`活动地址:`)
-  console.log(`请自行测试有水无水。`)
+  console.log(`助力空气。`)
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     if (cookie) {
