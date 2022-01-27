@@ -7,17 +7,17 @@
 ==============Quantumult X==============
 [task_local]
 #京喜领88元红包
-11 0,7 * * * https://raw.githubusercontent.com/KingRan/JDJB/main/jd_jxlhb_new.js, tag=京喜领88元红包, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+11 0,7 * * * 
 
 ==============Loon==============
 [Script]
-cron "11 0,7 * * *" script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_jxlhb_new.js,tag=京喜领88元红包
+cron "11 0,7 * * *" 
 
 ================Surge===============
-京喜领88元红包 = type=cron,cronexp="11 0,7 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_jxlhb_new.js
+京喜领88元红包 = type=cron,cronexp="11 0,7 * * *",
 
 ===============小火箭==========
-京喜领88元红包 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_jxlhb_new.js, cronexpr="11 0,7 * * *", timeout=3600, enable=true
+京喜领88元红包 = type=cron,script-path=, cronexpr="11 0,7 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京喜领88元红包');
 const notify = $.isNode() ? require('./sendNotify') : {};
