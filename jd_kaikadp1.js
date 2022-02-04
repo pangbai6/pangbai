@@ -1,5 +1,5 @@
 /*
-
+吃ck1
 */
 const $ = new Env("大牌联合");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -46,11 +46,11 @@ if ($.isNode()) {
             $.bean = 0;
             $.ADID = getUUID('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 1);
             $.UUID = getUUID('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-            authorCodeList = ['']
+            authorCodeList = ['Zjaex487RnRfTt+2IFYntsjNhNaYFy2HteErE6izlhTf9nrGY7gBkCdGU4C6z/xD']
             $.appkey = "51B59BB805903DA4CE513D29EC448375"
             $.userId = "10299171"
             $.actId = "29c257bced_220124"
-            $.authorCode = “Zjaex487RnRfTt+2IFYntsjNhNaYFy2HteErE6izlhTf9nrGY7gBkCdGU4C6z/xD”
+            $.authorCode = ownCode ? ownCode : authorCodeList[random(0, authorCodeList.length)]
             console.log('去助力 -> '+$.authorCode);
             await openCardNew();
             if ($.bean > 0) {
