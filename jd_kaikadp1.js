@@ -1,7 +1,7 @@
 /*
 吃ck1
 */
-const $ = new Env("大牌联合");
+const $ = new Env("必迈大牌联合");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '';
