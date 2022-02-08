@@ -1,22 +1,11 @@
 /*
 
-JoyJd任务脚本
-已支持IOS双京东账号,Node.js支持N个京东账号
-脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #JoyJd任务脚本
-5 2,18 * * * https://raw.githubusercontent.com/KingRan/JDJB/main/jd_joyjd_open.js, tag=JoyJd任务脚本, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+5 2,18 * * * 
 
-================Loon==============
-[Script]
-cron "5 2,18 * * *" script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_joyjd_open.js,tag=JoyJd任务脚本
 
-===============Surge=================
-JoyJd任务脚本 = type=cron,cronexp="5 2,18 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_joyjd_open.js
-
-============小火箭=========
-JoyJd任务脚本 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_joyjd_open.js, cronexpr="5 2,18 * * *", timeout=3600, enable=true
 
 
 */
@@ -37,7 +26,7 @@ if ($.isNode()) {
 }
 message = ""
 !(async () => {
-	console.log('入口：https://prodev.m.jd.com/mall/active/3z1Vesrhx3GCCcBn2HgbFR4Jq68o/index.html')
+	console.log('入口：空气')
 	console.log('开一张卡获得10豆')
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
@@ -78,7 +67,7 @@ async function run() {
       return
     }
     let config = [
-      {configCode:'469f588bbf0f45e1bf06c87c76df9db8',configName:'我爱520-1'},
+      {configCode:'7b0c39fc30c94676a1549223eecb03b1',configName:'科沃斯主导情人节活动'},
        //   {configCode:'761d289b16d74713bf6cee8462ca0e76',configName:'我爱520-2'},
         //    {configCode:'3d83678471e74b84940b99d16d8848b5',configName:'我爱520-3'},
       //{configCode:'ce04c87546ea40cc8f601e85f2dda2a9',configName:'秋新资任务组件 组1'},
