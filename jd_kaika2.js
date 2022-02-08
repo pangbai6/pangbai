@@ -1,4 +1,4 @@
-const $ = new Env("大牌好礼带回家");
+const $ = new Env("臻宠会员 甜蜜告白");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '';
