@@ -23,7 +23,7 @@ requests.packages.urllib3.disable_warnings()
 
 
 run_send='yes'          # yes或no, yes则启用通知推送服务
-wabao_spring='yes'      # 是否自动领取奖励并提现,环境变量优先于脚本内部变量
+wabao_spring='no'      # 是否自动领取奖励并提现,环境变量优先于脚本内部变量
 linkId="pTTvJeSTrpthgk9ASBVGsw"
 
 
