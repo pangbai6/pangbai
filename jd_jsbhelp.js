@@ -13,7 +13,7 @@
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 
 */
-const $ = new Env('京东极速版');
+const $ = new Env('极速版邀人得金币');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
