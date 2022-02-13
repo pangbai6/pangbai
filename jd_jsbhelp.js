@@ -1,15 +1,28 @@
 /*
 京东极速版金币助力
+
 只运行金币助力！
+
 需要自己填写inviterId
-cron 0 0 * * * https://raw.githubusercontent.com/pangbai6/pangbai66/main/jd_jsbhelp.js
-/*
+邀请分享链接里面包含inviterId,自己找出来就行了
+
+
+活动时间：长期
+活动入口：京东极速版app-现金签到
+已支持IOS双京东账号,Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+
+*/
 const $ = new Env('京东极速版');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '', message;
-$.shareCodes = ['wuJlMIXcmiYw1J3rceeKJg=='];
+
+
+
+$.shareCodes = ['wuJlMIXcmiYw1J3rceeKJg=='];	
+
 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -95,7 +108,7 @@ async function signInit() {
     $.get(taskUrl('speedSignInit', {
       "activityId": "8a8fabf3cccb417f8e691b6774938bc2",
       "kernelPlatform": "RN",
-      "inviterId":"wuJlMIXcmiYw1J3rceeKJg=="
+      "inviterId":"/i6MFTclO6QmFj77KWv3mXzNKqCtS9QXIHxQr/Gb+KY="
     }), async (err, resp, data) => {
       try {
         if (err) {
