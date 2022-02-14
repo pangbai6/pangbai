@@ -1,3 +1,9 @@
+/*
+20:/！F21u58Aj1rkH！，Come on~瓜分百万京豆，快加入我的战队吧！
+————————————————
+IOS等用户直接用NobyDa的jd cookie
+cron "1 0,7,12 * * *" script-path=jd_anjia.js,tag=
+*/
 const $ = new Env("飞利浦");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
