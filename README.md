@@ -7,8 +7,7 @@ ql repo https://github.com/pangbai6/pangbai66.git "jd_|jx_|yangmao_|getJDCookie"
 ```
 {一键青龙+内部互助+依赖安装}
 ```bash <(curl -sL  http://jx.lim1.cn/pangbai/ql.sh)
-```
+
 
 {单独配置内部互助}
 ```https://docs.qq.com/doc/DZlBxR1J0VG5ydlND
-```
