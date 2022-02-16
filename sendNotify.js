@@ -7,7 +7,7 @@
  * @param text 通知头
  * @param desp 通知体
  * @param params 某些推送通知方式点击弹窗可跳转, 例：{ url: 'https://abc.com' }
- * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
+ * @param author 作者仓库等信息  例：`本通知 By：旁白
  */
 //详细说明参考 https://github.com/ccwav/QLScript2.
 const querystring = require('querystring');
