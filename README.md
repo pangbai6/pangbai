@@ -1,4 +1,6 @@
 TG https://t.me/+ACZhpla2Nh8zOTRl
+## 重要通知
+### TG https://t.me/+ACZhpla2Nh8zOTRl
 免责声明：仓库内所有文件仅供学习使用 使用本仓库请删除青龙默认代理
 
 {集合仓库拉取命令}
