@@ -17,9 +17,12 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 const activityList = [
-    {'id':'3ad40f25d3f949b9a7a6f9abf460a27d','endTime':1639584000000},
-    {'id':'68cd1c64d3cc4421a992c40d46f0e0d5','endTime':1640015999000},
-    {'id':'572c45d23ce341ceb72391c4555fc96e','endTime':1639583999000},
+   {'id':'4a5217ae45d248bf92cfe526ba49fcf3','endTime':1644508799000},//2022-02-01---2022-02-10 SKG京东自营旗舰店
+    {'id':'027ba51d1ee44a3eb9dddfb06ee4f9e6','endTime':1646063999000},//2022-02-01---2022-02-10 SKG京东自营旗舰店
+    {'id':'dc08625c66a342a7b884b7a0e981edd8','endTime':1646063999000},//2022-02-01---2022-02-28 Origins悦木之源京东自营官方旗舰店
+    {'id':'145efa9da8d74d4784f284a10f3f13c2','endTime':1646063999000},//2022-02-01---2022-02-28 戴·可·思（Dexter）母婴京东自营旗舰店
+    {'id':'ad006d9123d14e92b40a898c19508bc1','endTime':1645286400000},//2022-02-01---2022-02-20 乐而雅旗舰店
+    {'id':'c6b3d988a3c843039783ce91cb0d320e','endTime':1644940799000},//2022-01-25---2022-02-15 美的京东自营官方旗舰店
 ];
 let ruhuiFlag = $.isNode() ? (process.env.RUHUIFLAG ? process.env.RUHUIFLAG : 2):2;//有些粉丝互动需要入会，RUHUIFLAG=1，自动入会，默认不自动入会
 ruhuiFlag = Number(ruhuiFlag);
