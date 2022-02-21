@@ -17,6 +17,7 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 const activityList = [
+    {'id':'05d65678d569498487057eb6ee2b3880','endTime':1646063999000},//2022-02-15---2022-02-28
    {'id':'4a5217ae45d248bf92cfe526ba49fcf3','endTime':1644508799000},//2022-02-01---2022-02-10 SKG京东自营旗舰店
     {'id':'027ba51d1ee44a3eb9dddfb06ee4f9e6','endTime':1646063999000},//2022-02-01---2022-02-10 SKG京东自营旗舰店
     {'id':'dc08625c66a342a7b884b7a0e981edd8','endTime':1646063999000},//2022-02-01---2022-02-28 Origins悦木之源京东自营官方旗舰店
