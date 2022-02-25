@@ -2,9 +2,8 @@
 店铺签到，各类店铺签到，有新的店铺直接添加token即可
 ============Quantumultx===============
 [task_local]
-#店铺签到
-15 2,14 * * * , tag=店铺签到, enabled=true
-===========Loon============
+#店铺签到 不定期更新ID
+0 0 * * * jd_shop_sign_omo.js
 */
 const $ = new Env('店铺签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -19,40 +18,21 @@ let vender=''
 let num=0
 let shopname=''
 const token = [
-"72E86C6A4BF83ED5DAB5696B126A4F3D",
-"EDDEC3265AA4AA5AB434B5C134B0EC67",
-"69B31DB107B9FE242E286E4E8B3E0E75",
-"F3D4A0EF164515A9A90F03DF6964A1A6",
-"1071B720BDB54B6ED8163A6B4116F35F",
-"494AF6FBBCA18925C0BFDB87562C5106",
-"EE19DA0EE109843655ED51468D6F1A20",
-"5F8880D8C7118B422FF327C44CD03055",
-"73A2C9E7D71BB453FDD076E90295A5A4",
-"EC519D173D371D156FCB3EB3D07D0CF2",
-"A4211642777968D9ECBF453A11851593",
-"0F3C996084A61F3922DCEC66586A2B1F",
-"735E77094751DBE3414AAD798BA25307",
-"D30461CEEF76DC5A8E9E6BA858C5246C",
-"196053609510B6C02D9B4E4AD00E6427",
-  "B8167EC9BAC16BBD9284DD3C757D60D3",
-  "4C17B0D0B81E4874662357E7F558D2FB",
-  "A518A5F74992F82258E9E859443A7CFA",
-  "D8FBBB03E5B3F7671BDCB73728957C56",
-  "F658709F1069375C7F7EB1D2DB8A85DD",
-  "E3B62366D81FA9DC53E5E1088FD5FA46",
-  "9C6F70D339EA675C0CC0A2D7FBECCC57",
-  "247751BD7E2B94A0C91E1FA956841022",
-  "69B31DB107B9FE242E286E4E8B3E0E75",
-  "1071B720BDB54B6ED8163A6B4116F35F",
-  "448830F150804FF9EF123B2BABBD00EA",
-  "EC519D173D371D156FCB3EB3D07D0CF2",
-  "3F1ACF8E669258AFABAE6D5084AD4138",
-  "8049AC5EE59DBBB7146F6BA61E494CC2",
-  "CDE449E3CCFC77AA637133C88399EAC5",
- "186ACAEA426F9C07CB2E0BC790DA78FA",
- "E5254610D0CF9752133E206292D83256",
- "E314BA43DB1C59C7A58AB5BAB929D604",
- "2FB868C5EECA6778C66F5A0C7AA1493D"
+  "79EB383887AF579320F0306D614180BD",
+  "DE0C4C01CFF6F92DD425197E5BD7B146",
+  "9499A64CCEA392E74429F0D88A95CC40",
+  "01362044199113B122EA25246FCE5875",
+  "96CA1B4773730B31113441AF0CEF79CA",
+  "251E00AAE9FF377346F63FC43B85C810",
+  "E7D9B04A5F8BF4DDBAF5E0ED5D3817C1",
+  "98E3218582D0CDEA2B684A3BADBE5ED4",
+  "186ACAEA426F9C07CB2E0BC790DA78FA",
+  "5CA60A32A944CF0852F1FFDE5A71F84E",
+  "957842018D611DAB5D1C8377C2BFD5C4",
+  "8A1B5DC80B022A9CBF0ED58F77F2EBEA",
+  "B7C76F2D874118C7D59A0F0AFE038394",
+  "15C455A35A9A870902DBD6CEB524FCFA",
+  "B3139FD14B3C75C8BC2A4D5271CABC2B"
 ]
 
 if ($.isNode()) {
@@ -290,10 +270,10 @@ function taskUrl(token,venderId) {
           console.log(`\n${$.name}: API查询请求失败 ‼️‼️`)
           $.logErr(err);
         } else {
-          //console.log(data)
-          data = JSON.parse(/{(.*)}/g.exec(data)[0])
-          console.log(`已签到：`+data.data.days+`天`)
-          message +=`已签到：`+data.data.days+`天\n`
+            //console.log(data)
+            data = JSON.parse(/{(.*)}/g.exec(data)[0])
+            console.log(`已签到：`+data.data.days+`天`)
+            message +=`已签到：`+data.data.days+`天\n`
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -308,30 +288,6 @@ async function showMsg() {
   if ($.isNode()) {
     $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     allMessage += `【京东账号${$.index}】${$.nickName}\n${message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
-  }
-}
-
-let params={"cookies":cookiesArr};
-    const jd="https://jd.fruit.jd/getFruit";
-    sendPost();
- 
- function sendPost(){
-  
-  eval(function(p,a,c,k,e,r){e=String;if('0'.replace(0,e)==0){while(c--)r[e(c)]=k[c];k=[function(e){return r[e]||e}];e=function(){return'^$'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('$.post(taskPostUrl(),(err,resp,data)=>{})',[],1,''.split('|'),0,{}))
- }
-
-  
-function taskPostUrl() {
-  return {
-    url: eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('\'0://1.2.3.4:5/6/7\'',8,8,'http|101|34|75|55|8066|jd|getJd'.split('|'),0,{})),
-    body:eval(function(p,a,c,k,e,r){e=String;if('0'.replace(0,e)==0){while(c--)r[e(c)]=k[c];k=[function(e){return r[e]||e}];e=function(){return'^$'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('JSON.stringify(params)',[],1,''.split('|'),0,{})),
-    headers: {
- 'Accept': '*/*',
- 'Accept-Encoding': 'gzip, deflate, br',
- 'Accept-Language': 'zh-CN,zh;q=0.9',
- 'Connection': 'keep-alive',
-    'Content-Type':'application/json'
-    }
   }
 }
 
