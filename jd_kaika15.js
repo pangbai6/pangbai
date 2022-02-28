@@ -7,7 +7,7 @@
 第一个CK失效会退出脚本
 
 ————————————————
-入口：[ 2.28-3.8 大牌会员日 (https://lzdz1-isv.isvjcloud.com/dingzhi/bigname/memberday/activity?activityId=dz3eb0e16893aa4f7a91d103a6db0b&shareUuid=0bb80b1737404f1ba5ed7de596f960b4)]
+入口：[ 2.28-3.8 大牌会员日 ()]
 
 请求太频繁会被黑ip
 过10分钟再执行
@@ -16,7 +16,7 @@ cron:30 1,14 1-8 3 *
 ============Quantumultx===============
 [task_local]
 #2.28-3.8 大牌会员日
-30 1,14 1-8 3 * jd_opencardL84.js, tag=2.28-3.8 大牌会员日, enabled=true
+30 1,14 1-8 3 * , tag=2.28-3.8 大牌会员日, enabled=true
 
 */
 
