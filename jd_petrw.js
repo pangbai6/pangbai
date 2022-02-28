@@ -24,7 +24,7 @@ cron "15 6-18/6 * * *" script-path=jd_pet.js,tag=东东萌宠
 东东萌宠 = type=cron,script-path=jd_pet.js, cronexpr="15 6-18/6 * * *", timeout=3600, enable=true
 
  */
-const $ = new Env('东东萌宠');
+const $ = new Env('东东萌宠任务');
 let cookiesArr = [], cookie = '', jdPetShareArr = [], isBox = false, allMessage = '';
 let message = '', subTitle = '', option = {};
 let jdNotify = false; //是否关闭通知，false打开通知推送，true关闭通知推送
@@ -34,6 +34,7 @@ let notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let newShareCodes = [];
 let NoNeedCodes = [];
+let lnrun = 0;
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         if (jdCookieNode[item]) {
@@ -79,7 +80,13 @@ console.log(`共${cookiesArr.length}个京东账号\n`);
             goodsUrl = '';
             taskInfoKey = [];
             option = {};
-            await jdPet();
+            lnrun++;
+			await jdPet();
+			if (lnrun == 3) {
+              console.log(`\n【访问接口次数达到3次，休息一分钟.....】\n`);
+              await $.wait(60 * 1000);
+              lnrun = 0;
+			}
         }
     }
     if ($.isNode() && allMessage && $.ctrTemp) {
@@ -142,7 +149,7 @@ async function jdPet() {
             await doTask(); //做日常任务
             await feedPetsAgain(); //再次投食
             await energyCollect(); //收集好感度
-            await showMsg();
+            //await showMsg();
             
         } else if (initPetTownRes.code === '0') {
             console.log(`初始化萌宠失败:  ${initPetTownRes.message}`);
@@ -153,28 +160,6 @@ async function jdPet() {
         if ($.isNode())
             await notify.sendNotify(`${$.name}`, errMsg);
         $.msg($.name, '', `${errMsg}`)
-    }
-}
-
-async function GetShareCode() {
-    try {
-        //查询jd宠物信息
-        const initPetTownRes = await request('initPetTown');
-        if (initPetTownRes.code === '0' && initPetTownRes.resultCode === '0' && initPetTownRes.message === 'success') {
-            $.petInfo = initPetTownRes.result;
-            if ($.petInfo.userStatus == 0 || $.petInfo.petStatus == 5 || $.petInfo.petStatus == 6 || !$.petInfo.goodsInfo) {
-				console.log(`【京东账号${$.index}（${$.UserName}）的互助码】\n宠物状态不能被助力，跳过...`);
-                return;
-            }
-            console.log(`【京东账号${$.index}（${$.UserName}）的互助码】\n${$.petInfo.shareCode}`);
-            newShareCodes.push($.petInfo.shareCode);			
-        }
-    } catch (e) {
-        $.logErr(e)
-        const errMsg = `【京东账号${$.index} ${$.nickName || $.UserName}】\n任务执行异常，请检查执行日志 ‼️‼️`;
-        if ($.isNode())
-            await notify.sendNotify(`${$.name}`, errMsg);
-        $.msg($.name, '', `${errMsg}`);
     }
 }
 
@@ -198,7 +183,8 @@ async function feedPetsAgain() {
         if (foodAmount - 100 >= 10) {
             for (let i = 0; i < parseInt((foodAmount - 100) / 10); i++) {
                 const feedPetRes = await request('feedPets');
-                console.log(`投食feedPetRes`);
+				await $.wait(5 * 1000);
+				console.log(`投食feedPetRes`);
                 if (feedPetRes.resultCode == 0 && feedPetRes.code == 0) {
                     console.log('投食成功')
                 }
@@ -271,7 +257,13 @@ async function doTask() {
     }
     // 投食10次
     if (feedReachInit && !feedReachInit.finished) {
-        await feedReachInitFun();
+        lnrun++;
+		await feedReachInitFun();
+		if (lnrun == 5) {
+            console.log(`\n【访问接口次数达到5次，休息半分钟.....】\n`);
+            await $.wait(30 * 1000);
+			lnrun = 0;
+		}
     }
 }
 // 好友助力信息
@@ -322,6 +314,10 @@ async function petSport() {
             if (resultCode == 0) {
                 let sportRevardResult = await request('getSportReward');
                 console.log(`领取遛狗奖励完成: ${JSON.stringify(sportRevardResult)}`);
+			} else if (resultCode == 1013) {
+			let sportRevardResult = await request('getSportReward', {"version":1});
+				console.log(`领取遛狗奖励完成: ${JSON.stringify(sportRevardResult)}`);
+				if (sportRevardResult.resultCode == 0) resultCode = 0
             }
             times++;
         } while (resultCode == 0 && code == 0)
@@ -429,10 +425,11 @@ async function feedReachInitFun() {
     console.log('投食任务开始...');
     let finishedTimes = $.taskInfo.feedReachInit.hadFeedAmount / 10; //已经喂养了几次
     let needFeedTimes = 10 - finishedTimes; //还需要几次
-    let tryTimes = 20; //尝试次数
+    let tryTimes = 10; //尝试次数
     do {
         console.log(`还需要投食${needFeedTimes}次`);
         const response = await request('feedPets');
+		await $.wait(5 * 1000);
         console.log(`本次投食结果: ${JSON.stringify(response)}`);
         if (response.resultCode == 0 && response.code == 0) {
             needFeedTimes--;
@@ -509,7 +506,7 @@ function TotalBean() {
 }
 // 请求
 async function request(function_id, body = {}) {
-    await $.wait(3000); //歇口气儿, 不然会报操作频繁
+    await $.wait(5 * 1000); //歇口气儿, 不然会报操作频繁
     return new Promise((resolve, reject) => {
         $.post(taskUrl(function_id, body), (err, resp, data) => {
             try {
@@ -543,7 +540,7 @@ function taskUrl(function_id, body = {}) {
     body["channel"] = 'app';
     return {
         url: `${JD_API_HOST}?functionId=${function_id}`,
-        body: `body=${escape(JSON.stringify(body))}&appid=wh5&loginWQBiz=pet-town&clientVersion=9.0.4`,
+    body: `body=${encodeURIComponent(JSON.stringify(body))}&appid=wh5&loginWQBiz=pet-town&clientVersion=9.0.4`,
         headers: {
             'Cookie': cookie,
             'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
