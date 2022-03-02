@@ -50,7 +50,7 @@ if ($.isNode()) {
                 continue
             }
             authorCodeList = [
-                '434db18ca18b4e44a3fefab870c9edaa',
+                'd9c2e02b32dd4811b1e16b2201eb58f8',
                
 
             ]
