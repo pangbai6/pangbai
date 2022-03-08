@@ -10,23 +10,24 @@
 ============Quantumultx===============
 [task_local]
 #京东极速版
-0 1,7 * * * https://raw.githubusercontent.com/222222/sync/jd_scripts/jd_speed_sign.js, tag=京东极速版, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+21 3,8 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_speed_sign.js, tag=京东极速版, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0 1,7 * * *" script-path=https://raw.githubusercontent.com/222222/sync/jd_scripts/jd_speed_sign.js,tag=京东极速版
+cron "21 3,8 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_speed_sign.js,tag=京东极速版
 
 ===============Surge=================
-京东极速版 = type=cron,cronexp="0 1,7 * * *",wake-system=1,timeout=33600,script-path=https://raw.githubusercontent.com/222222/sync/jd_scripts/jd_speed_sign.js
+京东极速版 = type=cron,cronexp="21 3,8 * * *",wake-system=1,timeout=33600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_speed_sign.js
 
 ============小火箭=========
-京东极速版 = type=cron,script-path=https://raw.githubusercontent.com/222222/sync/jd_scripts/jd_speed_sign.js, cronexpr="0 1,7 * * *", timeout=33600, enable=true
+京东极速版 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_speed_sign.js, cronexpr="21 3,8 * * *", timeout=33600, enable=true
 */
 const $ = new Env('京东极速版');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '', message;
+let IPError = false; // 403 ip黑
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -62,24 +63,32 @@ const JD_API_HOST = 'https://api.m.jd.com/', actCode = 'visa-card-001';
       }
       await jdGlobal()
       await $.wait(2*1000)
+      if (IPError){
+        console.log(`403 黑IP了，请换个IP`);
+        break;
+      }
     }
   }
 })()
-    .catch((e) => {
-      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-    })
-    .finally(() => {
-      $.done();
-    })
+  .catch((e) => {
+    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+  })
+  .finally(() => {
+    $.done();
+  })
 
 async function jdGlobal() {
   try {
     await richManIndex()
+
     await wheelsHome()
     await apTaskList()
     await wheelsHome()
+
     // await signInit()
     // await sign()
+    await invite()
+    await invite2()
     $.score = 0
     $.total = 0
     await taskList()
@@ -106,7 +115,7 @@ async function signInit() {
     $.get(taskUrl('speedSignInit', {
       "activityId": "8a8fabf3cccb417f8e691b6774938bc2",
       "kernelPlatform": "RN",
-      "inviterId":""
+      "inviterId":"U44jAghdpW58FKgfqPdotA=="
     }), async (err, resp, data) => {
       try {
         if (err) {
@@ -130,77 +139,81 @@ async function signInit() {
 async function sign() {
   return new Promise(resolve => {
     $.get(taskUrl('speedSign', {
-          "kernelPlatform": "RN",
-          "activityId": "8a8fabf3cccb417f8e691b6774938bc2",
-          "noWaitPrize": "false"
-        }),
-        async (err, resp, data) => {
-          try {
-            if (err) {
-              console.log(`${JSON.stringify(err)}`)
-              console.log(`${$.name} API请求失败，请检查网路重试`)
-            } else {
-              if (safeGet(data)) {
-                data = JSON.parse(data);
-                if (data.subCode === 0) {
-                  console.log(`签到获得${data.data.signAmount}现金，共计获得${data.data.cashDrawAmount}`)
-                } else {
-                  console.log(`签到失败，${data.msg}`)
-                }
+        "kernelPlatform": "RN",
+        "activityId": "8a8fabf3cccb417f8e691b6774938bc2",
+        "noWaitPrize": "false"
+      }),
+      async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if (data.subCode === 0) {
+                console.log(`签到获得${data.data.signAmount}现金，共计获得${data.data.cashDrawAmount}`)
+              } else {
+                console.log(`签到失败，${data.msg}`)
               }
             }
-          } catch (e) {
-            $.logErr(e, resp)
-          } finally {
-            resolve(data);
           }
-        })
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
   })
 }
 
 async function taskList() {
   return new Promise(resolve => {
     $.get(taskUrl('ClientHandleService.execute', {
-          "version": "3.1.0",
-          "method": "newTaskCenterPage",
-          "data": {"channel": 1}
-        }),
-        async (err, resp, data) => {
-          try {
-            if (err) {
-              console.log(`${JSON.stringify(err)}`)
-              console.log(`${$.name} API请求失败，请检查网路重试`)
-            } else {
-              if (safeGet(data)) {
-                data = JSON.parse(data);
-                for (let task of data.data) {
-                  $.taskName = task.taskInfo.mainTitle
-                  if (task.taskInfo.status === 0) {
-                    if (task.taskType >= 1000) {
-                      await doTask(task.taskType)
-                      await $.wait(1000)
-                    } else {
-                      $.canStartNewItem = true
-                      while ($.canStartNewItem) {
-                        if (task.taskType !== 3) {
-                          await queryItem(task.taskType)
-                        } else {
-                          await startItem("", task.taskType)
-                        }
+        "version": "3.1.0",
+        "method": "newTaskCenterPage",
+        "data": {"channel": 1}
+      }),
+      async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              for (let task of data.data) {
+                $.taskName = task.taskInfo.mainTitle
+                if (task.taskInfo.status === 0) {
+                  if (task.taskType >= 1000) {
+                    await doTask(task.taskType)
+                    await $.wait(1000)
+                  } else {
+                    $.canStartNewItem = true
+                    while ($.canStartNewItem) {
+                      if (task.taskType !== 3) {
+                        await queryItem(task.taskType)
+                      } else {
+                        await startItem("", task.taskType)
                       }
                     }
-                  } else {
-                    console.log(`${task.taskInfo.mainTitle}已完成`)
                   }
+                } else {
+                  console.log(`${task.taskInfo.mainTitle}已完成`)
+                }
+                if (IPError){
+                  console.error('API请求失败，停止执行')
+                  break
                 }
               }
             }
-          } catch (e) {
-            $.logErr(e, resp)
-          } finally {
-            resolve(data);
           }
-        })
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
   })
 }
 
@@ -214,6 +227,7 @@ async function doTask(taskId) {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
+          IPError = true
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -236,27 +250,27 @@ async function doTask(taskId) {
 async function queryJoy() {
   return new Promise(resolve => {
     $.get(taskUrl('ClientHandleService.execute', {"method": "queryJoyPage", "data": {"channel": 1}}),
-        async (err, resp, data) => {
-          try {
-            if (err) {
-              console.log(`${JSON.stringify(err)}`)
-              console.log(`${$.name} API请求失败，请检查网路重试`)
-            } else {
-              if (safeGet(data)) {
-                data = JSON.parse(data);
-                if (data.data.taskBubbles)
-                  for (let task of data.data.taskBubbles) {
-                    await rewardTask(task.id, task.activeType)
-                    await $.wait(500)
-                  }
-              }
+      async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if (data.data.taskBubbles)
+                for (let task of data.data.taskBubbles) {
+                  await rewardTask(task.id, task.activeType)
+                  await $.wait(500)
+                }
             }
-          } catch (e) {
-            $.logErr(e, resp)
-          } finally {
-            resolve(data);
           }
-        })
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
   })
 }
 
@@ -309,6 +323,7 @@ async function queryItem(activeType = 1) {
             } else {
               console.log(`商品任务开启失败，${data.message}`)
               $.canStartNewItem = false
+              IPError = true
             }
           }
         }
@@ -337,6 +352,7 @@ async function startItem(activeId, activeType) {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
+          IPError = true
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -370,18 +386,18 @@ async function startItem(activeId, activeType) {
 async function endItem(uuid, activeType, activeId = "", videoTimeLength = "") {
   return new Promise(resolve => {
     $.get(taskUrl('ClientHandleService.execute',
-        {
-          "method": "enterAndLeave",
-          "data": {
-            "channel": "1",
-            "clientTime": +new Date(),
-            "uuid": uuid,
-            "videoTimeLength": videoTimeLength,
-            "messageType": "2",
-            "activeType": activeType,
-            "activeId": activeId
-          }
-        }), async (err, resp, data) => {
+      {
+        "method": "enterAndLeave",
+        "data": {
+          "channel": "1",
+          "clientTime": +new Date(),
+          "uuid": uuid,
+          "videoTimeLength": videoTimeLength,
+          "messageType": "2",
+          "activeType": activeType,
+          "activeId": activeId
+        }
+      }), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -408,18 +424,18 @@ async function endItem(uuid, activeType, activeId = "", videoTimeLength = "") {
 async function rewardItem(uuid, activeType, activeId = "", videoTimeLength = "") {
   return new Promise(resolve => {
     $.get(taskUrl('ClientHandleService.execute',
-        {
-          "method": "rewardPayment",
-          "data": {
-            "channel": "1",
-            "clientTime": +new Date(),
-            "uuid": uuid,
-            "videoTimeLength": videoTimeLength,
-            "messageType": "2",
-            "activeType": activeType,
-            "activeId": activeId
-          }
-        }), async (err, resp, data) => {
+      {
+        "method": "rewardPayment",
+        "data": {
+          "channel": "1",
+          "clientTime": +new Date(),
+          "uuid": uuid,
+          "videoTimeLength": videoTimeLength,
+          "messageType": "2",
+          "activeType": activeType,
+          "activeId": activeId
+        }
+      }), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -447,24 +463,24 @@ async function rewardItem(uuid, activeType, activeId = "", videoTimeLength = "")
 async function cash() {
   return new Promise(resolve => {
     $.get(taskUrl('MyAssetsService.execute',
-        {"method": "userCashRecord", "data": {"channel": 1, "pageNum": 1, "pageSize": 20}}),
-        async (err, resp, data) => {
-          try {
-            if (err) {
-              console.log(`${JSON.stringify(err)}`)
-              console.log(`${$.name} API请求失败，请检查网路重试`)
-            } else {
-              if (safeGet(data)) {
-                data = JSON.parse(data);
-                $.total = data.data.goldBalance
-              }
+      {"method": "userCashRecord", "data": {"channel": 1, "pageNum": 1, "pageSize": 20}}),
+      async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              $.total = data.data.goldBalance
             }
-          } catch (e) {
-            $.logErr(e, resp)
-          } finally {
-            resolve(data);
           }
-        })
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
   })
 }
 
@@ -472,91 +488,91 @@ async function cash() {
 function wheelsHome() {
   return new Promise(resolve => {
     $.get(taskGetUrl('wheelsHome',
-        {"linkId":"toxw9c5sy9xllGBr3QFdYg"}),
-        async (err, resp, data) => {
-          try {
-            if (err) {
-              console.log(`${JSON.stringify(err)}`)
-              console.log(`${$.name} API请求失败，请检查网路重试`)
-            } else {
-              if (safeGet(data)) {
-                data = JSON.parse(data);
-                if(data.code ===0){
-                  console.log(`【幸运大转盘】剩余抽奖机会：${data.data.lotteryChances}`)
-                  while(data.data.lotteryChances--) {
-                    await wheelsLottery()
-                    await $.wait(500)
-                  }
+      {"linkId":"toxw9c5sy9xllGBr3QFdYg"}),
+      async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if(data.code ===0){
+                console.log(`【幸运大转盘】剩余抽奖机会：${data.data.lotteryChances}`)
+                while(data.data.lotteryChances--) {
+                  await wheelsLottery()
+                  await $.wait(500)
                 }
               }
             }
-          } catch (e) {
-            $.logErr(e, resp)
-          } finally {
-            resolve(data);
           }
-        })
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
   })
 }
 // 大转盘
 function wheelsLottery() {
   return new Promise(resolve => {
     $.get(taskGetUrl('wheelsLottery',
-        {"linkId":"toxw9c5sy9xllGBr3QFdYg"}),
-        async (err, resp, data) => {
-          try {
-            if (err) {
-              console.log(`${JSON.stringify(err)}`)
-              console.log(`${$.name} API请求失败，请检查网路重试`)
-            } else {
-              if (safeGet(data)) {
-                data = JSON.parse(data);
-                if(data.data && data.data.rewardType){
-                  console.log(`幸运大转盘抽奖获得：【${data.data.couponUsedValue}-${data.data.rewardValue}${data.data.couponDesc}】\n`)
-                  message += `幸运大转盘抽奖获得：【${data.data.couponUsedValue}-${data.data.rewardValue}${data.data.couponDesc}】\n`
-                }else{
-                  console.log(`幸运大转盘抽奖获得：空气`)
-                }
+      {"linkId":"toxw9c5sy9xllGBr3QFdYg"}),
+      async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if(data.data && data.data.rewardType){
+                console.log(`幸运大转盘抽奖获得：【${data.data.couponUsedValue}-${data.data.rewardValue}${data.data.couponDesc}】\n`)
+                message += `幸运大转盘抽奖获得：【${data.data.couponUsedValue}-${data.data.rewardValue}${data.data.couponDesc}】\n`
+              }else{
+                console.log(`幸运大转盘抽奖获得：空气`)
               }
             }
-          } catch (e) {
-            $.logErr(e, resp)
-          } finally {
-            resolve(data);
           }
-        })
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
   })
 }
 // 大转盘任务
 function apTaskList() {
   return new Promise(resolve => {
     $.get(taskGetUrl('apTaskList',
-        {"linkId":"toxw9c5sy9xllGBr3QFdYg"}),
-        async (err, resp, data) => {
-          try {
-            if (err) {
-              console.log(`${JSON.stringify(err)}`)
-              console.log(`${$.name} API请求失败，请检查网路重试`)
-            } else {
-              if (safeGet(data)) {
-                data = JSON.parse(data);
-                if(data.code ===0){
-                  for(let task of data.data){
-                    // {"linkId":"toxw9c5sy9xllGBr3QFdYg","taskType":"SIGN","taskId":67,"channel":4}
-                    if(!task.taskFinished && ['SIGN','BROWSE_CHANNEL'].includes(task.taskType)){
-                      console.log(`去做任务${task.taskTitle}`)
-                      await apDoTask(task.taskType,task.id,4,task.taskSourceUrl)
-                    }
+      {"linkId":"toxw9c5sy9xllGBr3QFdYg"}),
+      async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if(data.code ===0){
+                for(let task of data.data){
+                  // {"linkId":"toxw9c5sy9xllGBr3QFdYg","taskType":"SIGN","taskId":67,"channel":4}
+                  if(!task.taskFinished && ['SIGN','BROWSE_CHANNEL'].includes(task.taskType)){
+                    console.log(`去做任务${task.taskTitle}`)
+                    await apDoTask(task.taskType,task.id,4,task.taskSourceUrl)
                   }
                 }
               }
             }
-          } catch (e) {
-            $.logErr(e, resp)
-          } finally {
-            resolve(data);
           }
-        })
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
   })
 }
 // 大转盘做任务
@@ -564,28 +580,28 @@ function apDoTask(taskType,taskId,channel,itemId) {
   // console.log({"linkId":"toxw9c5sy9xllGBr3QFdYg","taskType":taskType,"taskId":taskId,"channel":channel,"itemId":itemId})
   return new Promise(resolve => {
     $.get(taskGetUrl('apDoTask',
-        {"linkId":"toxw9c5sy9xllGBr3QFdYg","taskType":taskType,"taskId":taskId,"channel":channel,"itemId":itemId}),
-        async (err, resp, data) => {
-          try {
-            if (err) {
-              console.log(`${JSON.stringify(err)}`)
-              console.log(`${$.name} API请求失败，请检查网路重试`)
-            } else {
-              if (safeGet(data)) {
-                data = JSON.parse(data);
-                if(data.code ===0 && data.data && data.data.finished){
-                  console.log(`任务完成成功`)
-                }else{
-                  console.log(JSON.stringify(data))
-                }
+      {"linkId":"toxw9c5sy9xllGBr3QFdYg","taskType":taskType,"taskId":taskId,"channel":channel,"itemId":itemId}),
+      async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if(data.code ===0 && data.data && data.data.finished){
+                console.log(`任务完成成功`)
+              }else{
+                console.log(JSON.stringify(data))
               }
             }
-          } catch (e) {
-            $.logErr(e, resp)
-          } finally {
-            resolve(data);
           }
-        })
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
   })
 }
 // 红包大富翁
@@ -659,6 +675,79 @@ function taskGetUrl(function_id, body) {
       "referer": "https://an.jd.com/babelDiy/Zeus/q1eB6WUB8oC4eH1BsCLWvQakVsX/index.html"
     }
   }
+}
+
+function invite2() {
+  let inviterIdArr = [
+    "5V7vHE23qh2EkdBHXRFDuA==",
+    "Yvk/fMWJC/6lvcx1iUFnsw==",
+    "E9EvSFNuA1pahSQT0uSsXkW1v0j+QOHQbk8+peJYc0I=",
+    "wXX9SjXOdYMWe5Ru/1+x9A==",
+    "4AVQao+eH8Q8kvmXnWmkG8ef/fNr5fdejnD9+9Ugbec=",
+    "jbGBRBPo5DmwB9ntTCSVOGXuh1YQyccCuZpWwb3PlIc=",
+    "m95y+Pagsmn6cXWtNhfrV9ymDN4QK1ivsmbN32lpEHw=",
+    "DuqL56/3h17VpbHIW+v8uJRRyPL6k9E1Hu5UhCyHw/s=",
+    "mCvmrmFghpDCLcL3VZs53BkAhucziHAYn3HhPmURJJE=",
+    "zPiP6uq7hi9AS7VecMnRvA==",
+  ]
+  let inviterId = inviterIdArr[Math.floor((Math.random() * inviterIdArr.length))]
+  let options = {
+    url: "https://api.m.jd.com/",
+    body: `functionId=TaskInviteService&body=${JSON.stringify({"method":"participateInviteTask","data":{"channel":"1","encryptionInviterPin":encodeURIComponent(inviterId),"type":1}})}&appid=market-task-h5&uuid=&_t=${Date.now()}`,
+    headers: {
+      "Host": "api.m.jd.com",
+      "Accept": "application/json, text/plain, */*",
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Origin": "https://assignment.jd.com",
+      "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+      "User-Agent": $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : (require('./JS_USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      "Referer": "https://assignment.jd.com/",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Cookie": cookie
+    }
+  }
+  $.post(options, (err, resp, data) => {
+    // console.log(data)
+  })
+}
+
+function invite() {
+  let t = +new Date()
+  let inviterIdArr = [
+    "5V7vHE23qh2EkdBHXRFDuA==",
+    "Yvk/fMWJC/6lvcx1iUFnsw==",
+    "E9EvSFNuA1pahSQT0uSsXkW1v0j+QOHQbk8+peJYc0I=",
+    "wXX9SjXOdYMWe5Ru/1+x9A==",
+    "4AVQao+eH8Q8kvmXnWmkG8ef/fNr5fdejnD9+9Ugbec=",
+    "jbGBRBPo5DmwB9ntTCSVOGXuh1YQyccCuZpWwb3PlIc=",
+    "m95y+Pagsmn6cXWtNhfrV9ymDN4QK1ivsmbN32lpEHw=",
+    "DuqL56/3h17VpbHIW+v8uJRRyPL6k9E1Hu5UhCyHw/s=",
+    "mCvmrmFghpDCLcL3VZs53BkAhucziHAYn3HhPmURJJE=",
+    "zPiP6uq7hi9AS7VecMnRvA==",
+    "YQ5wwbSWDzNIudDC2OWvSw==",
+    "+vbK7QKOtpHM4dsSRqUPPX/11g/P71iBYh46dyiMuKk=",
+    "VdDrieI4oR6XwchWlxwfCQqEf6/k8cYvTG52R1ToSoQ=",
+    "D7QE/1ouU1wA14mAV0zGMg==",
+  ]
+  let inviterId = inviterIdArr[Math.floor((Math.random() * inviterIdArr.length))]
+  let options = {
+    url: `https://api.m.jd.com/?t=${t}`,
+    body: `functionId=InviteFriendChangeAssertsService&body=${JSON.stringify({"method":"attendInviteActivity","data":{"inviterPin":encodeURIComponent(inviterId),"channel":1,"token":"","frontendInitStatus":""}})}&referer=-1&eid=eidI9b2981202fsec83iRW1nTsOVzCocWda3YHPN471AY78%2FQBhYbXeWtdg%2F3TCtVTMrE1JjM8Sqt8f2TqF1Z5P%2FRPGlzA1dERP0Z5bLWdq5N5B2VbBO&aid=&client=ios&clientVersion=14.4.2&networkType=wifi&fp=-1&uuid=ab048084b47df24880613326feffdf7eee471488&osVersion=14.4.2&d_brand=iPhone&d_model=iPhone10,2&agent=-1&pageClickKey=-1&platform=3&lang=zh_CN&appid=market-task-h5&_t=${t}`,
+    headers: {
+      "Host": "api.m.jd.com",
+      "Accept": "application/json, text/plain, */*",
+      "Content-type": "application/x-www-form-urlencoded",
+      "Origin": "https://invite-reward.jd.com",
+      "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+      "User-Agent": $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : (require('./JS_USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      "Referer": 'https://invite-reward.jd.com/',
+      "Accept-Encoding": "gzip, deflate, br",
+      "Cookie": cookie
+    }
+  }
+  $.post(options, (err, resp, data) => {
+    // console.log(data)
+  })
 }
 
 function TotalBean() {
