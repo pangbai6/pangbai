@@ -1,21 +1,3 @@
-## 重要通知
-### TG https://t.me/+ACZhpla2Nh8zOTRl
-不建议使用不建议使用不建议使用
-
-{集合仓库拉取命令}
-``` 
-ql repo https://github.com/pangbai6/pangbai66.git "jd_|jx_|yangmao_|getJDCookie" "activity|backUp""^jd[^_]|USER|function|utils|sendnotify|ZooFaker_Necklace|jd_Cookie|JDJRValidator_|sign_graphics_validate|ql|magic|cleancart_activity"
-```
-{上面不行就用这个}
-```
-ql repo https://github.com/pangbai6/pangbai66.git  "jd_|jx_|jdCookie" "activity|backUp" "^jd[^_]|USER|utils|function|sign|sendNotify|ql|JDJR"
-```
-{一键青龙+内部互助+依赖安装+集合仓库拉取}
-```
-bash <(curl -sL  http://jx.lim1.cn/pangbai/ql.sh)
-```
-
-{单独配置内部互助教程}
-```
-https://docs.qq.com/doc/DZlBxR1J0VG5ydlND
-```
+ 自己看脚本上传记录 被自己玩京东的朋友摆了一道 也是挺好的 可能罪有应得把 开库的初衷就是方便自己使用 后面就有人用上了我的库  没意思 其他库挺好的  记录什么都在 
+ 你们骂我 我都认了 只能说 我看错人了
+ 275769047这个是上传脚本的人的QQ 
